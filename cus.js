@@ -97,6 +97,82 @@ let toMixin = {
     }
 };
 
+toMixin.select = (n, items) => {
+    items = items.slice();
+    return through(n).map(() => {
+        let i = Math.floor(Math.random() * items.length);
+        return items.splice(i, 1)[0]
+    });
+};
+
+toMixin.sum = (items) => {
+    items.reduce((a, b) => a + b);
+};
+
+toMixin.randomBiased = (weights) => {
+    let total = Math.random();
+    let i = 0;
+    while (i + weights[i] < total) {
+        i += weights[i];
+    }
+    return i;
+};
+
+toMixin.merge = (...lists) => {
+    let result = [];
+    while (0 < lists.length) {
+        let weights = _.pluck(lists, 'length') / sum(_.pluck(lists, 'length'));
+        let chosenIndex = randomBiased(weights);
+        let chosen = lists[chosenIndex];
+        result.push(chosen.shift());
+        if (chosen.length === 0) {
+            lists.splice(chosenIndex, 1);
+        }
+    }
+    return result;
+};
+
+toMixin.through = (n) => {
+    let result = [];
+    for (var i = 0; i < n; i++) {
+        result.push(i);
+    }
+    return result;
+};
+
+toMixin.repeat = (n, item) => {
+    through(n).map(() => item);
+};  
+
+toMixin.calm = (f, wait) => {
+    let calls = [];
+    let calling = false;
+    let call = () => {
+        calling = true;
+        f(...(calls.shift()));
+        setTimeout(revisit, wait);
+    };
+    let revisit = () => {
+        calling = false;
+        if (calls.length !== 0) {
+            call();
+        }
+    };
+    return (...args) => {
+        calls.push(args);
+        if (!calling) {
+            call();
+        }
+    };
+};
+
+toMixin.shuffle = (items) => {
+    items = items.slice();
+    return through(items.length).map(() => {
+        return items.splice(Math.random() * items.length, 1)[0];
+    });
+};
+
 if (typeof _ !== "undefined" && _ !== null) {
     _.mixin(toMixin);
     module.exports = _;
