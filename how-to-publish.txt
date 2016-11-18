@@ -1,0 +1,6 @@
+
+# make changes to cus.js
+# increment changes in package.json
+git m "changes"
+npm login
+npm publish
