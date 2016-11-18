@@ -173,13 +173,6 @@ toMixin.shuffle = (items) => {
     });
 };
 
-if (typeof _ !== "undefined" && _ !== null) {
-    _.mixin(toMixin);
-    module.exports = _;
-} else if ((typeof module !== "undefined" && module !== null) && (typeof process !== "undefined" && process !== null)) {
-    let _ = require('underscore');
-    _.mixin(toMixin);
-    module.exports = _;
-} else {
-    console.error("Customscore: You need to include underscore as well! Try `npm install underscore`");
-}
+let _ = require('underscore');
+_.mixin(toMixin);
+module.exports = _;
