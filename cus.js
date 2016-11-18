@@ -109,7 +109,7 @@ toMixin.sum = (items) => {
     items.reduce((a, b) => a + b);
 };
 
-toMixin.randomBiased = (weights) => {
+toMixin.randomWeighted = (weights) => {
     let total = Math.random();
     let i = 0;
     while (i + weights[i] < total) {
