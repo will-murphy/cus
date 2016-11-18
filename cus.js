@@ -1,4 +1,6 @@
 
+let _ = require('underscore');
+
 let toMixin = {
     isEmpty: function(thing) {
       return thing.length === 0;
@@ -105,15 +107,17 @@ toMixin.select = (n, items) => {
     });
 };
 
-toMixin.sum = (items) => {
-    items.reduce((a, b) => a + b);
-};
+toMixin.sum = (items) => items.reduce((a, b) => a + b);
 
 toMixin.randomWeighted = (weights) => {
-    let total = Math.random();
+    let max = Math.random() * _.sum(weights);
+    console.log(max);
+    let total = 0;
     let i = 0;
-    while (i + weights[i] < total) {
-        i += weights[i];
+    while (total + weights[i] < max) {
+        total += weights[i];
+        i += 1;
+        console.log(i);
     }
     return i;
 };
@@ -121,9 +125,13 @@ toMixin.randomWeighted = (weights) => {
 toMixin.merge = (...lists) => {
     let result = [];
     while (0 < lists.length) {
-        let weights = _.pluck(lists, 'length') / sum(_.pluck(lists, 'length'));
-        let chosenIndex = randomBiased(weights);
+        console.log(lists);
+        let weights = _.pluck(lists, 'length');
+        console.log(weights);
+        let chosenIndex = _.randomWeighted(weights);
+        console.log(chosenIndex);
         let chosen = lists[chosenIndex];
+        console.log(chosen);
         result.push(chosen.shift());
         if (chosen.length === 0) {
             lists.splice(chosenIndex, 1);
@@ -173,6 +181,5 @@ toMixin.shuffle = (items) => {
     });
 };
 
-let _ = require('underscore');
 _.mixin(toMixin);
 module.exports = _;
