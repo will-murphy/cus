@@ -111,13 +111,11 @@ toMixin.sum = (items) => items.reduce((a, b) => a + b);
 
 toMixin.randomWeighted = (weights) => {
     let max = Math.random() * _.sum(weights);
-    console.log(max);
     let total = 0;
     let i = 0;
     while (total + weights[i] < max) {
         total += weights[i];
         i += 1;
-        console.log(i);
     }
     return i;
 };
@@ -125,13 +123,9 @@ toMixin.randomWeighted = (weights) => {
 toMixin.merge = (...lists) => {
     let result = [];
     while (0 < lists.length) {
-        console.log(lists);
         let weights = _.pluck(lists, 'length');
-        console.log(weights);
         let chosenIndex = _.randomWeighted(weights);
-        console.log(chosenIndex);
         let chosen = lists[chosenIndex];
-        console.log(chosen);
         result.push(chosen.shift());
         if (chosen.length === 0) {
             lists.splice(chosenIndex, 1);
