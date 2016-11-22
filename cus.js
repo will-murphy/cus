@@ -134,9 +134,13 @@ toMixin.merge = (...lists) => {
     return result;
 };
 
-toMixin.through = (n) => {
+toMixin.through = (a, b) => {
+    if (b === undefined) {
+        b = a;
+        a = 0;
+    }
     let result = [];
-    for (var i = 0; i < n; i++) {
+    for (var i = a; i < b; i++) {
         result.push(i);
     }
     return result;
