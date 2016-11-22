@@ -10,7 +10,7 @@ let toMixin = {
     },
     method: function(thing, name) {
       return function() {
-        return thing[name].apply(thing, arguments);
+        return thing[name].apply(thing, argument);
       };
     },
     protract: function() {
@@ -101,7 +101,7 @@ let toMixin = {
 
 toMixin.select = (n, items) => {
     items = items.slice();
-    return through(n).map(() => {
+    return _.through(n).map(() => {
         let i = Math.floor(Math.random() * items.length);
         return items.splice(i, 1)[0]
     });
@@ -143,7 +143,7 @@ toMixin.through = (n) => {
 };
 
 toMixin.repeat = (n, item) => {
-    through(n).map(() => item);
+    _.through(n).map(() => item);
 };  
 
 toMixin.calm = (f, wait) => {
@@ -170,7 +170,7 @@ toMixin.calm = (f, wait) => {
 
 toMixin.shuffle = (items) => {
     items = items.slice();
-    return through(items.length).map(() => {
+    return _.through(items.length).map(() => {
         return items.splice(Math.random() * items.length, 1)[0];
     });
 };
