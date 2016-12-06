@@ -107,7 +107,7 @@ toMixin.select = (n, items) => {
     });
 };
 
-toMixin.sum = (items) => items.reduce((a, b) => a + b);
+toMixin.sum = (items) => items.reduce(((a, b) => a + b), 0);
 
 toMixin.randomWeighted = (weights) => {
     let max = Math.random() * _.sum(weights);
