@@ -1,6 +1,6 @@
 {
   "name": "cus",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "main": "cus.js",
   "engines": "node 0.10",
   "author": {
